@@ -1,0 +1,299 @@
+llm_config {
+  "model_name": "azure-gpt-4o",
+  "deployment_name": "main-model"
+  temperature = 0.5
+}
+tools = [
+  {
+    name = "FacilitySupervisor"
+    instructions = """
+You are a tailings dam supervisory LLM, 
+your primary goal is the safe and continued operation of the tailings facility. 
+You should work to ensure that all monitoring equipment is in working order, and 
+work with the user to schedule work to bring the plant into compliance.
+Call the FacilityReader agent if you need information about the system.
+Call the WorkAndInventoryManager to make inquiries about scheduling or parts availability.
+Call the PlotSlyData tool to plot data after receiving sly data.
+If you get any file paths show the full file path unchanged to the user.
+    """
+    tools = [
+      "FacilityReader",
+      "WorkAndInventoryManager",
+      "PlotSlyData"
+    ],
+    "allow": {
+      "to_upstream": {
+        "sly_data": {
+          "graphing_data": true,
+        }
+      }
+    },
+    llm_config {
+      model_name = "azure-gpt-4o"
+      temperature = 0.5
+    }
+  },
+  {
+    name = "FacilityReader"
+
+    "function": {
+      "description": "Focuses on using the tools at hand to return information about the task.",
+      "parameters": {
+          "type": "object",
+          "properties": {
+              "problem_statement": {
+                  "type": "string",
+                  "description": "The requested problem to solve."
+              }
+          },
+          "required": ["problem_statement"]
+      }
+    }
+    "command": "Provide a factual tool based response to the problem_statement."
+    instructions = """
+You have access to a suite of tools that allows you to read 
+information from the tailings facility across multiple sites. When data is 
+requested you use these tools to return the data from the facility to the requestor. 
+You can return information about sites, dataloggers and devices and the data associated with them.
+    """
+    llm_config {
+      model_name = "azure-gpt-4o"
+      temperature = 0.5
+    },
+    "allow": {
+      "to_upstream": {
+        "sly_data": {
+          "graphing_data": true,
+        }
+      }
+    },
+    "tools": ["GetSitesList", "GetDataloggersList", "GetDeviceList", "GetDevicesBySite", "GetAgedDevices", "GetExceededDevices", "GetSlyDeviceData"]
+  },
+  {
+    name = "WorkAndInventoryManager"
+
+    "function": {
+      "description": "Focuses on using the tools at hand to return information about the task.",
+      "parameters": {
+          "type": "object",
+          "properties": {
+              "problem_statement": {
+                  "type": "string",
+                  "description": "The requested problem to solve."
+              }
+          },
+          "required": ["problem_statement"]
+      }
+    }
+    "command": "Provide a factual tool based response to the problem_statement."
+    instructions = """
+You have access to a suite of tools that allows you to read 
+information from the inventory and work order systems, use 
+these tools to answer the problem statement. You should serve any
+requests about availability or spares.
+    """
+    llm_config {
+      model_name = "azure-gpt-4o"
+      temperature = 0.5
+    },
+    "tools": ["GetInventory", "GetSitesList"]
+  },
+  {
+    "name": "GetSitesList",
+    "function": {
+        "description": """
+You are a tool that allows requestors to get a list of sites that are covered by the tailings facility monitoring system. 
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "empty_param": {
+                    "type": "string",
+                    "description": "A dummy parameter that has no effect on output."
+                },
+            },
+            "required": ["empty_param"]
+        }
+    },
+    "class": "get_site_list.GetSiteList"
+  },
+  {
+    "name": "GetDataloggersList",
+    "function": {
+        "description": """
+You are a tool that allows requestors to get a list of dataloggers for a specific site that are covered by the tailings facility monitoring system. 
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "site_name": {
+                    "type": "string",
+                    "description": "The name of the site to get the data loggers for."
+                },
+            },
+            "required": ["site_name"]
+        }
+    },
+    "class": "get_dataloggers.GetDataloggers"
+  },
+  { 
+    "name": "GetDeviceList",
+    "function": {
+        "description": """
+You are a tool that allows requestors to get a list of devices for a specific datalogger that are covered by the tailings facility monitoring system. 
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "datalogger_serial": {
+                    "type": "string",
+                    "description": "The serial number of the datalogger to get the devices for."
+                },
+            },
+            "required": ["datalogger_serial"]
+        }
+    },
+    "class": "get_devices.GetDevices"
+  },
+  {
+    "name": "GetDevicesBySite",
+    "function": {
+        "description": """
+You are a tool that allows requestors to get a list of devices for a specific site that are covered by the tailings facility monitoring system. You should be used preferentially for getting devices by site.
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "site": {
+                    "type": "string",
+                    "description": "The site name to get the devices for."
+                },
+            },
+            "required": ["site"]
+        }
+    },
+    "class": "get_devices_by_site.GetDevicesBySite"
+  },
+  { 
+    "name": "GetAgedDevices",
+    "function": {
+        "description": """
+You are a tool that allows requestors to a send a list of devices and get back information about when those devices last reported. 
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "device_list": {
+                  "type": "array",
+                  "description": "The names of the devices to query. Do not populate to receive a list of all devices.",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+            },
+            "required": []
+        }
+    },
+    "class": "get_aged_devices.GetAgedDevices"
+  },
+  { 
+    "name": "GetExceededDevices",
+    "function": {
+        "description": """
+You are a tool that allows requestors to get a send a list of devices and get back information about if those devices are in exceedence. 
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "device_list": {
+                  "type": "array",
+                  "description": "The names of the devices to query. Do not populate to receive a list of all devices.",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "age": {
+                  "type": "string",
+                  "description": "The integer number of days to use to report a device as aged.",
+                }
+            },
+            "required": []
+        }
+    },
+    "class": "get_exceeded_devices.GetExceededDevices"
+  },
+  { 
+    "name": "GetInventory",
+    "function": {
+        "description": """
+You are a tool that allows requestors to get a site name and a device type and get back information about stock levels. 
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "site": {
+                  "type": "string",
+                  "description": "The name of the site to get data for.",
+                },
+                "device_type": {
+                  "type": "string",
+                  "description": "One of either 'VWP' or 'Datalogger' to get information for.",
+                }
+            },
+            "required": ["site", "device_type"]
+        }
+    },
+    "class": "get_inventory.GetInventory"
+  },
+  { 
+    "name": "GetSlyDeviceData",
+    "function": {
+        "description": """
+You are a tool that allows requestors to get data for a list of devices, the data will be returned in the sly variable graphing_data. 
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "device_list": {
+                  "type": "array",
+                  "description": "The names of the devices to query. Do not populate to receive a list of all devices.",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+            },
+            "required": ["device_list"]
+        }
+    },
+    "allow": {
+      "to_upstream": {
+        "sly_data": {
+          "graphing_data": true,
+        }
+      }
+    },
+    "class": "get_sly_device_data.GetSlyDeviceData"
+  },
+  { 
+    "name": "PlotSlyData",
+    "function": {
+        "description": """
+You are a tool that allows requestors to plot data that exists in the sly variable graphing_data you must call another tool that populates this variable first before calling this one. It is important to display the full path to the end user.
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "device_list": {
+                  "type": "array",
+                  "description": "The names of the devices to query. Do not populate to receive a list of all devices.",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+            },
+            "required": ["device_list"]
+        }
+    },
+    "class": "graph_tool.PlotGraphData"
+  }
+]

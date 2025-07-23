@@ -179,3 +179,7 @@ cython_debug/
 # Google credentials
 credentials.json
 token.json
+
+*.db
+*.png
+/logs

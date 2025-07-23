@@ -14,47 +14,21 @@
 
 
     # Basic examples
-    "music_nerd.hocon": true,
-    "music_nerd_local.hocon": true,
-    "music_nerd_pro.hocon": true,
-    "music_nerd_pro_local.hocon": true,
-    "music_nerd_pro_sly.hocon": true,
-    "music_nerd_pro_sly_local.hocon": true,
-    "hello_world.hocon": true,
+    "music_nerd.hocon": false,
+    "music_nerd_local.hocon": false,
+    "music_nerd_pro.hocon": false,
+    "music_nerd_pro_local.hocon": false,
+    "music_nerd_pro_sly.hocon": false,
+    "music_nerd_pro_sly_local.hocon": false,
+    "hello_world.hocon": false,
     "advanced_calculator.hocon": false,
-    "smart_home.hocon": true,
+    "smart_home.hocon": false,
 
     # Tool integration examples
-
-    # To use this agent network with Brave Search, obtain an API key from: https://brave.com/search/api/
-    # Once you have the API key, set it using the BRAVE_API_KEY environment variable.
-    # You can optionally set a custom search URL via the BRAVE_URL environment variable.
-    # If BRAVE_URL is not set, the default is: https://api.search.brave.com/res/v1/web/search?q=
-    # You can also configure the request timeout (in seconds) using BRAVE_TIMEOUT; the default is 30 seconds.
     "brave_search.hocon": false,
-
-    # To use this search tool, you must
-    #
-    # 1. Create a Custom Search Engine (CSE)
-    #   * Go to  https://programmablesearchengine.google.com/
-    #   * Click "Add" → Choose sites or use "*" to search the whole web (then enable that in settings).
-    #   * Note your Search Engine ID (cx).
-    # 2. Get Google API key
-    #  * Go to: https://console.cloud.google.com/
-    #  * Enable the Custom Search API.
-    #  * Create an API key under APIs & Services > Credentials.
-    #
-    # Use the CSE ID in step 1 to set GOOGLE_SEARCH_CSE_ID environment variable.
-    # Use the API key in step 2 to set GOOGLE_SEARCH_API_KEY environment variable.
-    #
-    # You can optionally set a custom search URL and a custom timeout via the GOOGLE_SEARCH_URL and GOOGLE_SEARCH_TIMEOUT environment variables.
-    # Otherwise, the default values of "https://www.googleapis.com/customsearch/v1" and "30" are used, respectively
-    "google_search.hocon": false,
-
-    "agent_network_html_creator.hocon": true,
-    "agentforce.hocon": true,
+    "agentforce.hocon": false,
     "agentspace_adapter.hocon": false,
-    "pdf_rag.hocon": true,
+    "pdf_rag.hocon": false,
     "agentic_rag.hocon": false,
     "kwik_agents.hocon": false,
 
@@ -89,62 +63,36 @@
 
 
     # Use cases
-    "airline_policy.hocon": true,
-    "banking_ops.hocon": true,
-    "cpg_agents.hocon": true,
+    "airline_policy.hocon": false,
+    "banking_ops.hocon": false,
+    "cpg_agents.hocon": false,
     "insurance_agents.hocon": false,  # This is a deprecated version of insurance_underwriting_agents.hocon
-    "insurance_underwriting_agents.hocon": true,
+    "insurance_underwriting_agents.hocon": false,
     "intranet_agents.hocon": false,  # This is a deprecated version of intranet_agents_with_tools.hocon
-    "intranet_agents_with_tools.hocon": true,
+    "intranet_agents_with_tools.hocon": false,
     "real_estate.hocon": false,
-    "retail_ops_and_customer_service.hocon": true,
-    "telco_network_support.hocon": true,
-    "therapy_vignette_supervisors.hocon": true,
-    "consumer_decision_assistant.hocon": true,
+    "retail_ops_and_customer_service.hocon": false,
+    "telco_network_support.hocon": false,
+    "therapy_vignette_supervisors.hocon": false,
+    "consumer_decision_assistant.hocon": false,
     # The following agent networks are used as sub-networkds by consumer_decision_assistant.hocon
-    "airbnb.hocon": true,
-    "booking.hocon": true,
-    "carmax.hocon": true,
-    "expedia.hocon": true,
-    "macys.hocon": true,
-    "LinkedInJobSeekerSupportNetwork.hocon": true
-    "website_search.hocon": true,
+    "airbnb.hocon": false,
+    "booking.hocon": false,
+    "carmax.hocon": false,
+    "expedia.hocon": false,
+    "macys.hocon": false,
+    "LinkedInJobSeekerSupportNetwork.hocon": false
+    "website_search.hocon": false,
 
     # Experimental and research
-    "agent_network_designer.hocon": true,
-    "six_thinking_hats.hocon": true,
+    "agent_network_designer.hocon": false,
+    "six_thinking_hats.hocon": false,
     # Set the following agent network to true before running apps/cruse/interface_flask.py
     "cruse_agent.hocon": false,
     # Set the following agent network to true before running apps/conscious_assistant/interface_flask.py
     "conscious_agent.hocon": false,
-    # Set the following agent network to true before running apps/log_analyzer/log_analyzer.py
+    # Set the following agent network to false before running apps/log_analyzer/log_analyzer.py
     "log_analysis_agents.hocon": false,
 
-    # Demos
-
-    # This agent network performs the following actions:
-    # 1. Calls "agent_network_designer" as an external agent to generate a .hocon configuration file.
-    # 2. Uses the "agent_network_html_generator" tool (from the toolbox) to create an HTML visualization of the network.
-    # 3. Demonstrates how the generated network works by calling the coded tool "NsflowSelenium".
-    # 4. Sends an email with the .hocon and HTML files attached using the "gmail_with_attachment" tool (also from the toolbox).
-    #
-    # Requirements:
-    # - neuro-san>=0.5.38
-    # - Install Gmail support:
-    #     pip install -U langchain-google-community\[gmail\]
-    # - Set up Gmail API credentials:
-    #     Follow the instructions at
-    #     https://developers.google.com/workspace/gmail/api/quickstart/python#authorize_credentials_for_a_desktop_application
-    #     Then download the `credentials.json` file and place it at the top level of this repo.
-    # - Install Selenium and WebDriver Manager:
-    #     pip install selenium webdriver-manager
-    #
-    # Additional setup for running the "NsflowSelenium" coded tool:
-    # - Start the nsflow service in a separate terminal.
-    # - Use non-default ports for the neuro-san gRPC, HTTP, and nsflow servers.
-    #   The default ports are 30011 for gRPC, 8080 for HTTP, and 4173 for nsflow.
-    #   For example, you can run:
-    #     python -m run --server-grpc-port 30012 --server-http-port 8081 --nsflow-port 4174
-    "agent_network_architect.hocon": false,
-    "news_sentimental_analysis": false,
+    "tailings_system.hocon": true
 }
