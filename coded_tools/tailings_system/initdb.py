@@ -105,4 +105,14 @@ con_wo.execute(f"INSERT INTO inventory VALUES (4, 'Datalogger', 2, 'Gascoyne')")
 con_wo.execute(f"INSERT INTO inventory VALUES (5, 'VWP', 5, 'Murchison')")
 con_wo.execute(f"INSERT INTO inventory VALUES (6, 'Datalogger', 1, 'Murchison')")
 
+con_wo.execute("CREATE TABLE work_orders (work_order_id INTEGER PRIMARY KEY, status TEXT, instructions TEXT)")
+
+# create work_order_sequence
+con_wo.execute("CREATE SEQUENCE work_order_sequence START 1")
+
+con_wo.execute("CREATE TABLE transfer_requests (transfer_request_id INTEGER PRIMARY KEY, item_type TEXT, quantity INTEGER, from_site TEXT, to_site TEXT)")
+
+# create transfer_request_sequence
+con_wo.execute("CREATE SEQUENCE transfer_request_sequence START 1")
+
 con_wo.close()

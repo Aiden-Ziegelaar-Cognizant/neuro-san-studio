@@ -1,0 +1,3 @@
+Can you please create me a work order to replace the datalogger with the serial BAD_DATALOGGER, first check if there are any dataloggers available in the Pilbara and if not also raise a transfer request for one datalogger from the site with the most spare dataloggers.
+
+Are there any devices in the Pilbara that haven't reported data in the last 30 days?

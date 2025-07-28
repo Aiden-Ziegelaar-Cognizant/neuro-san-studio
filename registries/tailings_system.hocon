@@ -96,7 +96,7 @@ requests about availability or spares.
       model_name = "azure-gpt-4o"
       temperature = 0.5
     },
-    "tools": ["GetInventory", "GetSitesList"]
+    "tools": ["GetInventory", "GetSitesList", "CreateTransferRequest", "CreateWorkOrder", "UpdateWorkOrder", "GetWorkOrder"]
   },
   {
     "name": "GetSitesList",
@@ -295,5 +295,97 @@ You are a tool that allows requestors to plot data that exists in the sly variab
         }
     },
     "class": "graph_tool.PlotGraphData"
-  }
+  },
+  { 
+    "name": "CreateTransferRequest",
+    "function": {
+        "description": """
+You are a tool that allows requestors to create a transfer request to move items between sites, you should only ever call this tool when explicitly instructed by the user to create a transfer request.
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "item_type": {
+                  "type": "string"
+                  "description": "The type of item to transfer"
+                },
+                "quantity": {
+                  "type": "string"
+                  "description": "The integer number of items to transfer"
+                },
+                "from_site": {
+                  "type": "string"
+                  "description": "The site that the item is coming from"
+                },
+                "to_site": {
+                  "type": "string"
+                  "description": "The site that the item is going to"
+                },
+            },
+            "required": ["item_type", "quantity", "from_site", "to_site"]
+        }
+    },
+    "class": "create_transfer_request.CreateTransferRequest"
+  },
+  { 
+    "name": "CreateWorkOrder",
+    "function": {
+        "description": """
+You are a tool that allows requestors to create a work order for jobs to be done on the facility, the instructions should be comprehensive and easy to follow. You should only ever call this tool when explicitly instructed by the user to create a work order.
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "instructions": {
+                  "type": "string"
+                  "description": "The work to be performed"
+                }
+            },
+            "required": ["instructions"]
+        }
+    },
+    "class": "create_work_order.CreateWorkOrder"
+  },
+  { 
+    "name": "UpdateWorkOrder",
+    "function": {
+        "description": """
+You are a tool that allows requestors to update a work orders status. You should only ever call this tool when explicitly instructed by the user to update a work orders status.
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "status": {
+                  "type": "string"
+                  "description": "The new status to be applied to the work order"
+                },
+                "workorder_id": {
+                  "type": "string"
+                  "description": "The id of the work order to be updated"
+                }
+            },
+            "required": ["status", "workorder_id"]
+        }
+    },
+    "class": "update_work_order.UpdateWorkOrder"
+  },
+  { 
+    "name": "GetWorkOrder",
+    "function": {
+        "description": """
+You are a tool that allows requestors to query a work order by id.
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "workorder_id": {
+                  "type": "string"
+                  "description": "The id of the workorder to be retrieved"
+                }
+            },
+            "required": ["workorder_id"]
+        }
+    },
+    "class": "get_work_order.GetWorkOrder"
+  },
 ]
