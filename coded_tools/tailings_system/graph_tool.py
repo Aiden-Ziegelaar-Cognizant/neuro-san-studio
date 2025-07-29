@@ -26,7 +26,6 @@ class PlotGraphData(CodedTool):
     def invoke(self, args: Dict[str, Any], sly_data: Dict[str, Any]) -> Union[Dict[str, Any], str]:
         data = sly_data["graphing_data"]
         matplotlib.use('Agg')
-        print(data)
         fig, ax = plt.subplots(figsize=(5.4, 2), layout='constrained')
         for key in data:
             data_np = np.array(data[key])

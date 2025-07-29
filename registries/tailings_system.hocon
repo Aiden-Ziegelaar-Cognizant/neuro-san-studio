@@ -1,7 +1,7 @@
 llm_config {
   "model_name": "azure-gpt-4o",
   "deployment_name": "main-model"
-  temperature = 0.5
+  temperature = 0.0
 }
 tools = [
   {
@@ -11,7 +11,7 @@ You are a tailings dam supervisory LLM,
 your primary goal is the safe and continued operation of the tailings facility. 
 You should work to ensure that all monitoring equipment is in working order, and 
 work with the user to schedule work to bring the plant into compliance.
-Call the FacilityReader agent if you need information about the system.
+Call the FacilityReader agent if you need information about the system including data for devices for graphing.
 Call the WorkAndInventoryManager to make inquiries about scheduling or parts availability.
 Call the PlotSlyData tool to plot data after receiving sly data.
 If you get any file paths show the full file path unchanged to the user.
@@ -30,7 +30,7 @@ If you get any file paths show the full file path unchanged to the user.
     },
     llm_config {
       model_name = "azure-gpt-4o"
-      temperature = 0.5
+      temperature = 0.0
     }
   },
   {
@@ -58,7 +58,7 @@ You can return information about sites, dataloggers and devices and the data ass
     """
     llm_config {
       model_name = "azure-gpt-4o"
-      temperature = 0.5
+      temperature = 0.0
     },
     "allow": {
       "to_upstream": {
@@ -94,7 +94,7 @@ requests about availability or spares.
     """
     llm_config {
       model_name = "azure-gpt-4o"
-      temperature = 0.5
+      temperature = 0.0
     },
     "tools": ["GetInventory", "GetSitesList", "CreateTransferRequest", "CreateWorkOrder", "UpdateWorkOrder", "GetWorkOrder"]
   },
@@ -178,7 +178,7 @@ You are a tool that allows requestors to get a list of devices for a specific si
     "name": "GetAgedDevices",
     "function": {
         "description": """
-You are a tool that allows requestors to a send a list of devices and get back information about when those devices last reported. 
+You are a tool that allows requestors to a send a list of devices and get back information about when those devices last reported data. 
         """,
         "parameters": {
             "type": "object",

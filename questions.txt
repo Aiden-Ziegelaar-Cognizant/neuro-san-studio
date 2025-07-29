@@ -1,3 +1,11 @@
-Can you please create me a work order to replace the datalogger with the serial BAD_DATALOGGER, first check if there are any dataloggers available in the Pilbara and if not also raise a transfer request for one datalogger from the site with the most spare dataloggers.
-
 Are there any devices in the Pilbara that haven't reported data in the last 30 days?
+Can you please create me a work order to replace the datalogger with the serial BAD_DATALOGGER, first check if there are any dataloggers available in the Pilbara and if not also raise a transfer request for one datalogger from the site with the most spare dataloggers.
+Yes, please create the work order
+
+I'm working on work order 3, what do I need to do?
+Hey I've just finished work order 3, can you update its status to DONE?
+
+Hi I want to check on the status of work order 3, has it been completed yet?
+
+Are there any devices in the Pilbara that have exceeded their thresholds?
+Please give me a graph of the data for device VWP_00406 getting the data from the facilities reader
