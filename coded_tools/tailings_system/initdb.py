@@ -20,7 +20,7 @@ for i in range(50):
     con_t.execute(f"INSERT INTO dataloggers VALUES ({i}, {site_id}, '{serial_number}')")
 
 # Create a specific bad datalogger with a serial number of 0000000000
-con_t.execute("INSERT INTO dataloggers VALUES (1000, 0, 'BAD_DATALOGGER')")
+con_t.execute("INSERT INTO dataloggers VALUES (1000, 0, '9999999')")
 
 # create 10 VWP devices per datalogger with a name that starts with VWP_ then a 5 number sequence
 con_t.execute("CREATE TABLE vwp_devices (vwp_device_id INTEGER PRIMARY KEY, datalogger_id INTEGER, device_name TEXT, channel INTEGER)")

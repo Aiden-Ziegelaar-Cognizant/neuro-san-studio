@@ -67,7 +67,7 @@ You can return information about sites, dataloggers and devices and the data ass
         }
       }
     },
-    "tools": ["GetSitesList", "GetDataloggersList", "GetDeviceList", "GetDevicesBySite", "GetAgedDevices", "GetExceededDevices", "GetSlyDeviceData"]
+    "tools": ["GetSitesList", "GetDataloggersList", "GetDataloggerForDevice", "GetDeviceList", "GetDevicesBySite", "GetAgedDevices", "GetExceededDevices", "GetSlyDeviceData"]
   },
   {
     name = "WorkAndInventoryManager"
@@ -189,6 +189,10 @@ You are a tool that allows requestors to a send a list of devices and get back i
                   "items": {
                     "type": "string"
                   }
+                },,
+                "age": {
+                  "type": "string",
+                  "description": "The integer number of days to use to report a device as aged.",
                 }
             },
             "required": []
@@ -211,16 +215,31 @@ You are a tool that allows requestors to get a send a list of devices and get ba
                   "items": {
                     "type": "string"
                   }
-                },
-                "age": {
-                  "type": "string",
-                  "description": "The integer number of days to use to report a device as aged.",
                 }
             },
             "required": []
         }
     },
     "class": "get_exceeded_devices.GetExceededDevices"
+  },
+  { 
+    "name": "GetDataloggerForDevice",
+    "function": {
+        "description": """
+You are a tool that allows requestors to get a send a device name and get back information about the data logger that device is connected to. 
+        """,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "device_name": {
+                  "type": "string",
+                  "description": "The name of the devices to query",
+                }
+            },
+            "required": ["device_name"]
+        }
+    },
+    "class": "get_datalogger_for_device.GetDataloggerForDevice"
   },
   { 
     "name": "GetInventory",
