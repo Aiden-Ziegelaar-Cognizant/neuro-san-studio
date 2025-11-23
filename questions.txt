@@ -1,14 +1,13 @@
 Are there any devices in the Pilbara that haven't reported data in the last 30 days?
-What datalogger are these devices connected to?
+What dataloggers are these devices connected to?
 
-Looks like VWP_0_11 is malfunctioning and needs replacing. The other devices are connected to the datalogger with serial 9999999 and so we should replace the entire data logger. Can you check if we have stock on hand in the Pilbara for this?
-Great lets start with creating a work order to replace the malfunctioning VWP
+For the devices connected to datalogger with serial 9999999 we should replace the entire data logger. Can you check if we have stock on hand in the Pilbara for this?
 Can you check if we have any dataloggers at other sites we could transfer from?
-Yes, please transfer one datalogger from the Gascoyne region
-Perfect, can you please create a work order to replace the datalogger?
+Yes, please transfer one datalogger from the Gascoyne region.
+Perfect, can you please create a work order to replace the datalogger with serial 9999999.
 
-Hey I'm working on work order X what do I need to do?
-I've finished work order X please update its status to DONE.
+Hey I'm working on work order 2 what do I need to do?
+I've finished work order 2 please update its status to DONE.
 
 Are there any devices in the Pilbara that have exceeded their thresholds?
-Please give me a graph of the data for device VWP_00062, getting the data from the facilities reader
+Please give me a graph of the data for device VWP_00421, getting the data from the facilities reader

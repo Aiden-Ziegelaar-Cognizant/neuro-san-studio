@@ -245,7 +245,7 @@ You are a tool that allows requestors to get a send a device name and get back i
     "name": "GetInventory",
     "function": {
         "description": """
-You are a tool that allows requestors to get a site name and a device type and get back information about stock levels. 
+You are a tool that allows requestors to get a site name and a device type and get back information about stock levels, minimum required level of stock in that location, and spare stock available. If there is no stock spare then offer to raise a transfer request.
         """,
         "parameters": {
             "type": "object",
@@ -298,24 +298,11 @@ You are a tool that allows requestors to get data for a list of devices, the dat
     "function": {
         "description": """
 You are a tool that allows requestors to plot data that exists in the sly variable graphing_data you must call another tool that populates this variable first before calling this one. It is important to display the full path to the end user.
-        """,
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "device_list": {
-                  "type": "array",
-                  "description": "The names of the devices to query. Do not populate to receive a list of all devices.",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-            },
-            "required": ["device_list"]
-        }
+        """
     },
     "class": "graph_tool.PlotGraphData"
   },
-  { 
+  {
     "name": "CreateTransferRequest",
     "function": {
         "description": """

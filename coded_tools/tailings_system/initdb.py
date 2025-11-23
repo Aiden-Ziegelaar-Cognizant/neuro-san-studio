@@ -99,11 +99,11 @@ con_wo.execute("CREATE TABLE inventory (item_id INTEGER PRIMARY KEY, item_type T
 
 # Insert VWP and data logger rows for each site
 con_wo.execute(f"INSERT INTO inventory VALUES (1, 'VWP', 5, 'Pilbara')")
-con_wo.execute(f"INSERT INTO inventory VALUES (2, 'Datalogger', 0, 'Pilbara')")
+con_wo.execute(f"INSERT INTO inventory VALUES (2, 'Datalogger', 2, 'Pilbara')")
 con_wo.execute(f"INSERT INTO inventory VALUES (3, 'VWP', 5, 'Gascoyne')")
-con_wo.execute(f"INSERT INTO inventory VALUES (4, 'Datalogger', 2, 'Gascoyne')")
+con_wo.execute(f"INSERT INTO inventory VALUES (4, 'Datalogger', 4, 'Gascoyne')")
 con_wo.execute(f"INSERT INTO inventory VALUES (5, 'VWP', 5, 'Murchison')")
-con_wo.execute(f"INSERT INTO inventory VALUES (6, 'Datalogger', 1, 'Murchison')")
+con_wo.execute(f"INSERT INTO inventory VALUES (6, 'Datalogger', 2, 'Murchison')")
 
 con_wo.execute("CREATE TABLE work_orders (work_order_id INTEGER PRIMARY KEY, status TEXT, instructions TEXT)")
 

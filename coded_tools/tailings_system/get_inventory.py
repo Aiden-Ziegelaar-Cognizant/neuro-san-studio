@@ -19,7 +19,13 @@ class GetInventory(CodedTool):
         # Select stock level for site and device type
         self.work_order_db.execute(f"SELECT quantity FROM inventory WHERE location = ? AND item_type = ?", [site, device_type])
 
+        result = self.work_order_db.fetchone()[0]
+
+        print(result)
+
         # return sites
         return {
-            "stock_level": self.work_order_db.fetchall()
+            "stock_level": result,
+            "minimum_quantity": 2,
+            "spare": result - 2
         }
